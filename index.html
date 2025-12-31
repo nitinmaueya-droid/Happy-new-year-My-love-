@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year Kirti ❤️</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background: radial-gradient(circle at top,#ff5fa2,#ff2e63,#c81d77);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  color:white;
+  overflow:hidden;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:0;
+}
+
+.card{
+  position:relative;
+  z-index:2;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(8px);
+  padding:20px;
+  border-radius:25px;
+  text-align:center;
+  width:350px;
+  box-shadow:0 0 30px rgba(0,0,0,0.4);
+}
+
+h1{font-size:24px;}
+h2{font-size:20px;margin-bottom:10px;}
+
+.slider{
+  position:relative;
+  width:100%;
+  height:280px;
+  border-radius:20px;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+.slider img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  opacity:0;
+  animation:fade 21s infinite;
+}
+
+.slider img:nth-child(1){animation-delay:0s}
+.slider img:nth-child(2){animation-delay:3s}
+.slider img:nth-child(3){animation-delay:6s}
+.slider img:nth-child(4){animation-delay:9s}
+.slider img:nth-child(5){animation-delay:12s}
+.slider img:nth-child(6){animation-delay:15s}
+.slider img:nth-child(7){animation-delay:18s}
+
+@keyframes fade{
+  0%{opacity:0}
+  10%{opacity:1}
+  30%{opacity:1}
+  40%{opacity:0}
+  100%{opacity:0}
+}
+
+p{font-size:15px;line-height:1.6;}
+
+.heart{
+  font-size:36px;
+  animation:beat 1s infinite;
+}
+
+@keyframes beat{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.3);}
+  100%{transform:scale(1);}
+}
+
+.from{
+  margin-top:15px;
+  font-style:italic;
+  font-size:14px;
+}
+
+.play{
+  font-size:13px;
+  opacity:0.9;
+}
+</style>
+</head>
+
+<body onclick="playMusic()">
+
+<canvas id="fireworks"></canvas>
+
+<audio id="music" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1>🎉 Happy New Year 2026 🎉</h1>
+  <h2>Kirti Gupta ❤️</h2>
+
+  <div class="slider">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+    <img src="photo5.jpg">
+    <img src="photo6.jpg">
+    <img src="photo7.jpg">
+  </div>
+
+  <div class="heart">💖</div>
+
+  <p>
+    हर fireworks की रौशनी में  
+    बस तुम्हारा चेहरा दिखता है 😍  
+    नया साल नहीं…  
+    पूरी ज़िंदगी तुम्हारे साथ चाहिए 💍
+  </p>
+
+  <div class="from">
+    — तुम्हारा Sachin 💕
+  </div>
+
+  <div class="play">🔊 Touch screen to play music</div>
+</div>
+
+<script>
+function playMusic(){
+  document.getElementById("music").play();
+}
+
+/* FIREWORKS */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function random(min,max){return Math.random()*(max-min)+min;}
+
+let fireworks = [];
+
+function createFirework(){
+  let x = random(0,canvas.width);
+  let y = random(0,canvas.height/2);
+  let colors = ["#ff0043","#ffeb3b","#00e5ff","#c77dff","#00ff87"];
+  for(let i=0;i<50;i++){
+    fireworks.push({
+      x,y,
+      dx:random(-3,3),
+      dy:random(-3,3),
+      life:100,
+      color:colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  fireworks.forEach((p,i)=>{
+    p.x+=p.dx;
+    p.y+=p.dy;
+    p.life--;
+    ctx.fillStyle=p.color;
+    ctx.fillRect(p.x,p.y,3,3);
+    if(p.life<=0)fireworks.splice(i,1);
+  });
+  requestAnimationFrame(animate);
+}
+
+setInterval(createFirework,800);
+animate();
+</script>
+
+</body>
+</html>
